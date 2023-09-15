@@ -40,7 +40,7 @@ const HeroPage = async ({ params }: { params: { id: string } }) => {
           </div>
         
           <div className="mb-5">
-            <p className="text-xl font-bold">RealName:</p>
+            <p className="text-xl font-bold">Real name:</p>
             <p className="text-lg">{hero.realName}</p>
           </div>
         
