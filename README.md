@@ -7,7 +7,7 @@
 
 ## Demo
 
-https://crud-heroes-git-main-ivankhrsh.vercel.app/
+https://crud-heroes-rho.vercel.app/
 
 ## Getting Started
 
