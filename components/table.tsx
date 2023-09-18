@@ -56,6 +56,13 @@ export default async function Table({ page = 1 }) {
           </button>
         </Link>
       </div>
+      <div className="text-center mt-4">
+        <Link 
+          href='/create' 
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
+          Add Hero
+        </Link>
+      </div>
     </div>
   );
 }
