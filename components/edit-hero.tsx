@@ -4,11 +4,10 @@ import ExpandingArrow from "./expanding-arrow";
 import Image from "next/image";
 import { Hero } from "@/types/hero";
 import { FC } from "react";
+import { HeroPayload } from "@/types/heroPayload";
 
 interface Props {
   hero: Hero;
-  onEdit: (updatedHero: Hero) => void;
-  onDelete: () => void;
 }
 
 export const EditHero: FC<Props> = ({ hero}) => {
@@ -22,8 +21,8 @@ export const EditHero: FC<Props> = ({ hero}) => {
     }));
   };
 
-  const onEdit  = () => (123);
-  const onDelete  = () => (123);
+  const onEdit = (editedHero: HeroPayload) => (console.log(editedHero));
+  const onDelete = (editedHero: HeroPayload) => (console.log(editedHero));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
