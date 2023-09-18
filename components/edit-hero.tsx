@@ -22,7 +22,7 @@ export const EditHero: FC<Props> = ({ hero}) => {
   };
 
   const onEdit = (editedHero: HeroPayload) => (console.log(editedHero));
-  const onDelete = (editedHero: HeroPayload) => (console.log(editedHero));
+  const onDelete = (id: number) => (console.log(id));
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ export const EditHero: FC<Props> = ({ hero}) => {
         </button>
 
         <button
-          onClick={onDelete}
+          onClick={() => onDelete(hero.id)}
           className="group mt-20 sm:mt-0 rounded-full flex w-fit space-x-5 mb-5 bg-red-300	 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
         >
           Delete
