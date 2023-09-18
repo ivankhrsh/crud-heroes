@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { useState } from "react";
-import ExpandingArrow from "./expanding-arrow";
 import Image from "next/image";
 import { Hero } from "@/types/hero";
 import { FC } from "react";
@@ -8,9 +6,10 @@ import { HeroPayload } from "@/types/heroPayload";
 
 interface Props {
   hero: Hero;
+  toggleEditing: () => void;
 }
 
-export const EditHero: FC<Props> = ({ hero}) => {
+export const EditHero: FC<Props> = ({ hero, toggleEditing }) => {
   const [editedHero, setEditedHero] = useState(hero);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -21,25 +20,84 @@ export const EditHero: FC<Props> = ({ hero}) => {
     }));
   };
 
-  const onEdit = (editedHero: HeroPayload) => (console.log(editedHero));
-  const onDelete = (id: number) => (console.log(id));
+  async function updateHero(data: HeroPayload) {
+    try {
+      fetch("/api/update?" + new URLSearchParams({id: String(hero.id)}), {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      })
+    } catch (error) {
+      console.error('Error creating hero:', error);
+    }
+  }
+
+  const handleEdit = async (editedHero: HeroPayload) => {
+    if (editedHero !== hero) {
+      try {
+        const superpowers = Array.isArray(editedHero.superpowers) ? editedHero.superpowers : [editedHero.superpowers];
+        const images = Array.isArray(editedHero.images) ? editedHero.images : [editedHero.images];
+    
+        const updatedHeroData = {
+          ...editedHero,
+          superpowers,
+          images,
+        };
+        const response = await updateHero(updatedHeroData);
+        console.log(response);
+        toggleEditing();
+
+      } catch (error) {
+        console.error('Error creating hero:', error);
+      }
+    }
+  };
+
+  async function deleteHero(id: number) {
+    try {
+      fetch("/api/delete?" + new URLSearchParams({id: String(id)}), {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'DELETE'
+      })
+    } catch (error) {
+      console.error('Error creating hero:', error);
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await deleteHero(id);
+      console.log(response);
+    } catch (error) {
+      console.error('Error creating hero:', error);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onEdit(editedHero);
+    handleEdit(editedHero);
   };
 
   return (
     <div>
-      <Image
-        src={editedHero.images[0]}
-        className="rounded-lg ring-1 mb-5 ring-gray-900/5"
-        width={500}
-        height={500}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        alt={editedHero.nickname}
-        priority={true}
-      />
+      <div className="grid grid-cols-2 gap-4">
+        {hero.images.map((image) => (
+          <Image
+            key={image}
+            src={image}
+            className="rounded-lg ring-1 mb-5 ring-gray-900/5"
+            width={500}
+            height={500}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt={hero.nickname}
+            priority={true}
+          />
+        ))}
+      </div>
 
       <form onSubmit={handleSubmit}>
         <div className="mb-5">
@@ -106,7 +164,7 @@ export const EditHero: FC<Props> = ({ hero}) => {
         </button>
 
         <button
-          onClick={() => onDelete(hero.id)}
+          onClick={() => handleDelete(hero.id)}
           className="group mt-20 sm:mt-0 rounded-full flex w-fit space-x-5 mb-5 bg-red-300	 shadow-sm ring-1 ring-gray-900/5 text-gray-600 text-sm font-medium px-10 py-2 hover:shadow-lg active:shadow-sm transition-all"
         >
           Delete

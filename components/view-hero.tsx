@@ -13,15 +13,20 @@ interface Props {
 export const HeroView: FC<Props> = ({hero}) => {
   return (
     <>
-      <Image
-        src={hero.images[0]}
-        className="rounded-lg ring-1 mb-5 ring-gray-900/5"
-        width={500}
-        height={500}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        alt={hero.nickname}
-        priority={true}
-      />
+      <div className="grid grid-cols-2 gap-4">
+        {hero.images.map((image) => (
+          <Image
+            key={image}
+            src={image}
+            className="rounded-lg ring-1 mb-5 ring-gray-900/5"
+            width={500}
+            height={500}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            alt={hero.nickname}
+            priority={true}
+          />
+        ))}
+      </div>
 
       <div className="mb-5">
         <p className="text-xl font-bold">Nickname:</p>

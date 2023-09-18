@@ -23,7 +23,7 @@ export default async function Table({ page = 1 }) {
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">Look!</h2>
           <p className="text-sm text-gray-500">
-            Fetched {totalItems} heroes in {duration}ms 
+            Fetched {currentHeroes.length} heroes in {duration}ms 
           </p>
         </div>
         <RefreshButton />
@@ -33,10 +33,18 @@ export default async function Table({ page = 1 }) {
           <Link key={hero.id} href={`/hero/${hero.id}`} className="block px-2 hover:bg-gray-900/5 rounded-lg">
             <div className="flex items-center justify-between py-3">
               <div className="flex items-center space-x-4">
-                <Image src={hero.images[0]} alt={hero.nickname} width={48} height={48} className="rounded-lg ring-1 ring-gray-900/5" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                <Image 
+                  src={hero.images[0]} 
+                  alt={hero.nickname} 
+                  width={48} 
+                  height={48} 
+                  className="rounded-lg ring-1 ring-gray-900/5" 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  
+                />
                 <div className="space-y-1">
-                  <p className="font-medium leading-none">{hero.realName}</p>
-                  <p className="text-sm text-gray-500">{hero.catchPhrase}</p>
+                  <p className="font-medium leading-none">{hero.nickname}</p>
+                  <p className="text-sm text-gray-500">{hero.realName}</p>
                 </div>
               </div>
               <p className="text-sm text-gray-500">{timeAgo(hero.createdAt)}</p>

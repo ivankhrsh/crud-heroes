@@ -15,7 +15,7 @@ export default function CreateHero() {
     images: [],
   });
   
-  async function createHero(data: HeroPayload) {
+  async function createNewHero(data: HeroPayload) {
     try {
       fetch('/api/create', {
         body: JSON.stringify(data),
@@ -63,7 +63,7 @@ export default function CreateHero() {
         images,
       };
   
-      const response = await createHero(updatedHeroData);
+      const response = await createNewHero(updatedHeroData);
       console.log(response);
     } catch (error) {
       console.error('Error creating hero:', error);
