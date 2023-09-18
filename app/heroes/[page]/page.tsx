@@ -3,15 +3,13 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import Table from '@/components/table';
 import TablePlaceholder from '@/components/table-placeholder';
-import { redirect } from 'next/navigation';
 
 export const preferredRegion = 'home';
 export const dynamic = 'force-dynamic';
 
-export default function Home({ params }: { params: { page: string } }) {
-  const page = params.page;
-
-  return redirect("/heroes/1" );
+export default function Heroes({ params }: { params?: { page?: string } }) {
+  const currentPage = params?.page || '1';
+  const parsedPage = parseInt(currentPage);
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
@@ -19,10 +17,10 @@ export default function Home({ params }: { params: { page: string } }) {
         Heroes
       </h1>
       <Suspense fallback={<TablePlaceholder />}>
-        <Table page={parseInt(page) || 1} />
+        <Table page={parsedPage} />
       </Suspense>
 
-      <div className="sm:absolute sm:bottom-0 w-full px-20 py-10 flex justify-end">
+      <div className="sm:bottom-0 w-full px-20 py-10 flex justify-end">
         <Link href="https://github.com/ivankhrsh" className="flex items-center space-x-2">
           <Image src="/github.svg" alt="GitHub Logo" width={24} height={24} priority />
           <p className="font-light">Github</p>
